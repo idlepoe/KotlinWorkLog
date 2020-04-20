@@ -31,11 +31,8 @@ class LoginActivity : AppCompatActivity() {
             val loginUser = LoginUser(email,pass)
 
             val intent = Intent(this,RegisterActivity::class.java)
-
             intent.putExtra(USER_KEY,loginUser)
-
             startActivity(intent)
-
         }
 
     }

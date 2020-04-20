@@ -26,11 +26,13 @@
             android:textSize="20dp" />
 
         <EditText
+            android:id="@+id/username_edittext_register"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:layout_weight="7"
-            android:background="@drawable/edittext_border" />
+            android:background="@drawable/edittext_border"
+            android:inputType="text" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,13 +49,14 @@
             android:textSize="20dp" />
 
         <EditText
+            android:id="@+id/email_edittext_register"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:layout_weight="7"
-            android:background="@drawable/edittext_border"
 
-            />
+            android:background="@drawable/edittext_border"
+            android:inputType="textEmailAddress" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,11 +73,13 @@
             android:textSize="20dp" />
 
         <EditText
+            android:id="@+id/password_edittext_register"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:layout_weight="7"
-            android:background="@drawable/edittext_border" />
+            android:background="@drawable/edittext_border"
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,10 +88,11 @@
         android:layout_weight="1">
 
         <Button
+            android:id="@+id/register_button_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/Login" />
+            android:text="Register" />
     </LinearLayout>
 
     <LinearLayout
