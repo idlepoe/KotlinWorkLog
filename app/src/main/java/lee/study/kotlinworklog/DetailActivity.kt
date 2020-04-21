@@ -141,12 +141,12 @@ class DetailActivity : AppCompatActivity() {
         })
     }
 
-    fun insertTimeChar(target: String): String {
-        if (target.isEmpty() || target.length < 4) return ""
-        return target.substring(0, 2) + ":" + target.substring(2, 4)
-    }
+}
+fun insertTimeChar(target: String): String {
+    if (target.isEmpty() || target.length < 4) return ""
+    return target.substring(0, 2) + ":" + target.substring(2, 4)
+}
 
-    fun removeTimeChar(target: String): String {
-        return target.replace(":", "")
-    }
+fun removeTimeChar(target: String): String {
+    return target.replace(":", "")
 }
