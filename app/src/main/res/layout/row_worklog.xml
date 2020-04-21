@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_blue_dark"
+    >
+    <Button
+        android:id="@+id/date_button_row_worklog"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/button_border"
+    />
+
+    <TextView
+        android:id="@+id/starttime_textview_row_worklog"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/edittext_border" />
+
+    <TextView
+        android:id="@+id/endtime_textview_row_worklog"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/edittext_border" />
+
+    <TextView
+        android:id="@+id/etc_textview_row_worklog"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/edittext_border" />
+</LinearLayout>

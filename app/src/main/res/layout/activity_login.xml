@@ -85,13 +85,13 @@
             android:gravity="center"
             android:text="New Register" />
 
-        <Button
-            android:id="@+id/forget_button_log"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Forgot your password?" />
+<!--        <Button-->
+<!--            android:id="@+id/forget_button_log"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Forgot your password?" />-->
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
