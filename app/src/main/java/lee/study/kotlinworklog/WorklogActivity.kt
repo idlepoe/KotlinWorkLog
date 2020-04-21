@@ -2,17 +2,23 @@ package lee.study.kotlinworklog
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_worklog.*
+import kotlinx.android.synthetic.main.row_worklog.*
 import kotlinx.android.synthetic.main.row_worklog.view.*
+import kotlinx.android.synthetic.main.row_worklog.view.date_button_row_worklog
 import java.util.*
 
 class WorklogActivity : AppCompatActivity() {
@@ -37,8 +43,6 @@ class WorklogActivity : AppCompatActivity() {
         }
 
         getMySchedule()
-
-        Log.d(TAG, worklog_recyclerview_worklog.adapter.toString())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -75,8 +79,8 @@ class WorklogActivity : AppCompatActivity() {
         }
             .forEach {
                 val ref = FirebaseDatabase.getInstance()
-                    .getReference("/schedules/$uid/$c_year/$c_month/$it")
-                ref.setValue(WorkLog(it, "", "", ""))
+                    .getReference("/schedules/$uid/$c_year/$c_month/${it}")
+                ref.setValue(WorkLog(c_year + c_month + it, "", "","", ""))
             }
     }
 
@@ -129,8 +133,16 @@ class WorklogActivity : AppCompatActivity() {
     }
 }
 
-class WorkLog(val yyyymmdd: String, val startTime: String, val endTime: String, val etc: String) {
-    constructor() : this("", "", "", "")
+@Parcelize
+class WorkLog(
+    val yyyymmdd: String,
+    val startTime: String,
+    val endTime: String,
+    val breakTime: String,
+    val etc: String
+) :
+    Parcelable {
+    constructor() : this("", "", "", "", "")
 }
 
 class WorkLogRow(val worklog: WorkLog) : Item<ViewHolder>() {
@@ -139,9 +151,21 @@ class WorkLogRow(val worklog: WorkLog) : Item<ViewHolder>() {
         viewHolder.itemView.starttime_textview_row_worklog.text = worklog.startTime
         viewHolder.itemView.endtime_textview_row_worklog.text = worklog.endTime
         viewHolder.itemView.etc_textview_row_worklog.text = worklog.etc
+
+        viewHolder.itemView.date_button_row_worklog.setOnClickListener {
+            Log.d("worklog", worklog.yyyymmdd)
+
+            val intent = Intent(it.context, DetailActivity::class.java)
+            intent.putExtra(
+                "USER_KEY", worklog
+            )
+            it.context.startActivity(intent)
+        }
     }
 
     override fun getLayout(): Int {
         return R.layout.row_worklog
     }
+
+
 }
