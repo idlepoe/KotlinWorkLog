@@ -36,6 +36,12 @@ class WorklogActivity : AppCompatActivity() {
 
         worklog_recyclerview_worklog.adapter = adapter
 
+        if (year_textview_worklog.text.toString().isEmpty()) {
+            val cal = Calendar.getInstance()
+            val c_year = cal.get(Calendar.YEAR).toString()
+            year_textview_worklog.text = c_year
+        }
+
         if (month_textview_worklog.text.toString().isEmpty()) {
             val cal = Calendar.getInstance()
             val c_month = cal.get(Calendar.MONTH).toString()
@@ -80,15 +86,15 @@ class WorklogActivity : AppCompatActivity() {
             .forEach {
                 val ref = FirebaseDatabase.getInstance()
                     .getReference("/schedules/$uid/$c_year/$c_month/${it}")
-                ref.setValue(WorkLog(c_year + c_month + it, "", "","", ""))
+                ref.setValue(WorkLog(c_year + c_month + it, "", "", "", ""))
             }
     }
 
     fun getMySchedule() {
         val uid = FirebaseAuth.getInstance().uid
         val cal = Calendar.getInstance()
-        val c_year = cal.get(Calendar.YEAR).toString()
-        val c_month = cal.get(Calendar.MONTH).toString().padStart(2, '0')
+        val c_year = year_textview_worklog.text.toString()
+        val c_month = month_textview_worklog.text.toString()
         val monthMaxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
         val ref = FirebaseDatabase.getInstance().getReference("/schedules/$uid/$c_year/$c_month")
@@ -147,7 +153,7 @@ class WorkLog(
 
 class WorkLogRow(val worklog: WorkLog) : Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.date_button_row_worklog.text = worklog.yyyymmdd
+        viewHolder.itemView.date_button_row_worklog.text = worklog.yyyymmdd.takeLast(2)
         viewHolder.itemView.starttime_textview_row_worklog.text = worklog.startTime
         viewHolder.itemView.endtime_textview_row_worklog.text = worklog.endTime
         viewHolder.itemView.etc_textview_row_worklog.text = worklog.etc

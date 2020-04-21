@@ -44,9 +44,9 @@ class DetailActivity : AppCompatActivity() {
 
         modify_button_detail.setOnClickListener {
 
-            val starttime = starttime_button_detail.text.toString().replace(":", "")
-            val endtime = endtime_button_detail.text.toString().replace(":", "")
-            val breaktime = breaktime_button_detail.text.toString().replace(":", "")
+            val starttime = removeTimeChar(starttime_button_detail.text.toString())
+            val endtime = removeTimeChar(endtime_button_detail.text.toString())
+            val breaktime = removeTimeChar(breaktime_button_detail.text.toString())
             val etc = etc_edittext_detail.text.toString().replace(":", "")
 
             val uid = FirebaseAuth.getInstance().uid
@@ -56,7 +56,7 @@ class DetailActivity : AppCompatActivity() {
 
             ref.setValue(WorkLog(yyyymmdd, starttime, endtime, breaktime, etc))
 
-            val intent = Intent(this,WorklogActivity::class.java)
+            val intent = Intent(this, WorklogActivity::class.java)
             startActivity(intent)
         }
 
@@ -77,6 +77,7 @@ class DetailActivity : AppCompatActivity() {
                 minutes,
                 true
             ).show()
+
         }
 
         endtime_button_detail.setOnClickListener {
@@ -125,10 +126,10 @@ class DetailActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 val worklog = p0.getValue(WorkLog::class.java)
                 if (worklog != null) {
-                    starttime_button_detail.text=insertTimeChar(worklog.startTime)
-                    endtime_button_detail.text=insertTimeChar(worklog.endTime)
-                    breaktime_button_detail.text=insertTimeChar(worklog.breakTime)
-                    etc_edittext_detail.setText(worklog.etc,TextView.BufferType.EDITABLE)
+                    starttime_button_detail.text = insertTimeChar(worklog.startTime)
+                    endtime_button_detail.text = insertTimeChar(worklog.endTime)
+                    breaktime_button_detail.text = insertTimeChar(worklog.breakTime)
+                    etc_edittext_detail.setText(worklog.etc, TextView.BufferType.EDITABLE)
                 }
 
             }
@@ -143,5 +144,9 @@ class DetailActivity : AppCompatActivity() {
     fun insertTimeChar(target: String): String {
         if (target.isEmpty() || target.length < 4) return ""
         return target.substring(0, 2) + ":" + target.substring(2, 4)
+    }
+
+    fun removeTimeChar(target: String): String {
+        return target.replace(":", "")
     }
 }
