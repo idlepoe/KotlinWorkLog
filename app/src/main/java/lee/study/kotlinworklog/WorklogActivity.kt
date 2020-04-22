@@ -1,15 +1,16 @@
 package lee.study.kotlinworklog
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Color.red
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.InputType
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -52,6 +53,32 @@ class WorklogActivity : AppCompatActivity() {
         }
 
         getMySchedule()
+
+        year_textview_worklog.setOnClickListener {
+            val types = arrayOf("2020", "2021", "2022", "2023", "2024")
+            AlertDialog.Builder(this)
+                .setTitle("change year")
+                .setItems(types, DialogInterface.OnClickListener(){
+                        dialog: DialogInterface?, which: Int ->
+                    dialog?.dismiss()
+                    year_textview_worklog.text = (types.get(which))
+                    getMySchedule()
+                })
+                .show()
+        }
+
+        month_textview_worklog.setOnClickListener {
+            val types = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+            AlertDialog.Builder(this)
+                .setTitle("change month")
+                .setItems(types, DialogInterface.OnClickListener(){
+                        dialog: DialogInterface?, which: Int ->
+                    dialog?.dismiss()
+                    month_textview_worklog.text = (which+1).toString().padStart(2,'0')
+                    getMySchedule()
+                })
+                .show()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -108,6 +135,7 @@ class WorklogActivity : AppCompatActivity() {
                     initialSchedule()
                     getMySchedule()
                 } else {
+                    adapter.clear()
                     (1..monthMaxDays).map {
                         it.toString()
                             .padStart(2, '0')
@@ -168,16 +196,15 @@ class WorkLogRow(val worklog: WorkLog) : Item<ViewHolder>() {
         val date = format.parse(dateStr)
         val cal = Calendar.getInstance()
         cal.time = date
-        if(cal.get(Calendar.DAY_OF_WEEK)==5){
+        if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY){
             viewHolder.itemView.date_button_row_worklog.setBackgroundResource(R.drawable.button_border_red)
             //viewHolder.itemView.date_button_row_worklog.setTextColor(android.R.color.white)
-        }
-        if(cal.get(Calendar.DAY_OF_WEEK)==4){
+        }else if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY){
             viewHolder.itemView.date_button_row_worklog.setBackgroundResource(R.drawable.button_border_blue)
             //viewHolder.itemView.date_button_row_worklog.setTextColor(android.R.color.white)
+        }else{
+            viewHolder.itemView.date_button_row_worklog.setBackgroundResource(R.drawable.button_border_white)
         }
-
-
 
         viewHolder.itemView.date_button_row_worklog.setOnClickListener {
             Log.d("worklog", worklog.yyyymmdd)
